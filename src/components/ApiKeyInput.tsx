@@ -23,6 +23,19 @@ const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ providerId }) => {
   
   const providerDetails = LLM_PROVIDERS_DETAILS[providerId];
 
+  // Function to determine border color based on validation status
+  const getBorderColorClass = (): string => {
+    switch (validationStatus) {
+      case 'test_success':
+        return 'ring-green-500 focus:ring-green-500';
+      case 'test_failed':
+      case 'format_invalid':
+        return 'ring-red-500 focus:ring-red-500';
+      default: // Covers 'idle', 'testing', 'format_valid', 'pending', etc.
+        return 'ring-slate-300 focus:ring-blue-500';
+    }
+  };
+
   const updateParentStatus = useCallback((status: LlmProviderApiKeyInfo['status'], message: string, quotaInfo?: string) => {
     updateLlmProviderStatus(providerId, status, message, quotaInfo);
     if(status === 'valid') {
@@ -119,7 +132,7 @@ const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ providerId }) => {
             value={apiKey}
             onChange={handleApiKeyChange}
             placeholder={providerDetails.validationRegex.source.startsWith('^gsk_') ? "gsk_..." : (providerDetails.validationRegex.source.startsWith('^AIza') ? "AIza..." : "sk_...")}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors placeholder-slate-400 text-sm"
+            className={`w-full px-4 py-2.5 rounded-lg shadow-sm transition-colors placeholder-slate-400 text-sm ring-1 ring-inset ${getBorderColorClass()} focus:ring-2`}
             aria-describedby={`${providerId}-feedback`}
             />
              <button

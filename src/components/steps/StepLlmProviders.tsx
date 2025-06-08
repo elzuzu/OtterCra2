@@ -1,15 +1,33 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import ApiKeyInput from '../ApiKeyInput';
 import { LLM_PROVIDERS_DETAILS } from '../../constants';
 import { ConfigContext } from '../../App';
 import { CpuChipIconSolid, PlusCircleIcon } from '../icons'; 
 import { LlmProviderId } from '../../types';
 
-const StepLlmProviders: React.FC = () => {
+interface StepLlmProvidersProps {
+  onValidityChange: (isValid: boolean) => void;
+}
+
+const StepLlmProviders: React.FC<StepLlmProvidersProps> = ({ onValidityChange }) => {
   const context = useContext(ConfigContext);
   if (!context) throw new Error("ConfigContext not found");
   
   const { config, updateConfig } = context;
+
+  const safeProvidersConfig = useMemo(() => {
+    const providers = config.llmConfig.providers || {};
+    const allProviderIds = Object.keys(LLM_PROVIDERS_DETAILS) as LlmProviderId[];
+    const fullConfig: typeof providers = {};
+
+    allProviderIds.forEach(id => {
+      fullConfig[id] = providers[id] || {
+        apiKeyInfo: { key: '', status: 'pending', message: '' },
+        isConfigured: false,
+      };
+    });
+    return fullConfig;
+  }, [config.llmConfig.providers]);
   
   const [atLeastOneProviderValid, setAtLeastOneProviderValid] = useState(false);
   const [activeInputProviderIds, setActiveInputProviderIds] = useState<Set<LlmProviderId>>(new Set());
@@ -17,41 +35,44 @@ const StepLlmProviders: React.FC = () => {
   useEffect(() => {
     const initialActiveIds = new Set<LlmProviderId>();
     (Object.keys(LLM_PROVIDERS_DETAILS) as LlmProviderId[]).forEach(id => {
-        const providerConf = config.llmConfig.providers[id];
+        const providerConf = safeProvidersConfig[id]; // Use safeProvidersConfig
         if (providerConf.apiKeyInfo.key || providerConf.isConfigured || ['error', 'invalid'].includes(providerConf.apiKeyInfo.status)) {
             initialActiveIds.add(id);
         }
     });
     setActiveInputProviderIds(initialActiveIds);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, [safeProvidersConfig]); // Now depends on safeProvidersConfig
 
   useEffect(() => {
     setActiveInputProviderIds(currentActiveIds => {
         const newActiveIds = new Set(currentActiveIds);
         let changed = false;
         currentActiveIds.forEach(id => {
-            const providerConf = config.llmConfig.providers[id];
-            if (providerConf.apiKeyInfo.key === '' && providerConf.apiKeyInfo.status === 'pending' && !providerConf.isConfigured) {
+            const providerConf = safeProvidersConfig[id]; // Use safeProvidersConfig
+            // Ensure providerConf is not undefined before accessing its properties
+            if (providerConf && providerConf.apiKeyInfo.key === '' && providerConf.apiKeyInfo.status === 'pending' && !providerConf.isConfigured) {
                 newActiveIds.delete(id);
                 changed = true;
             }
         });
         return changed ? newActiveIds : currentActiveIds;
     });
-  }, [config.llmConfig.providers]);
+  }, [safeProvidersConfig]);
 
 
   useEffect(() => {
-    const isValid = Object.values(config.llmConfig.providers).some(p => p.isConfigured && p.apiKeyInfo.status === 'valid');
+    const isValid = Object.values(safeProvidersConfig).some(p => p.isConfigured && p.apiKeyInfo.status === 'valid');
     setAtLeastOneProviderValid(isValid);
+    // Call the callback to inform the parent component
+    onValidityChange(isValid);
+
     if (isValid !== config.setupFlags.llmProvidersConfigured) { 
         updateConfig(prev => ({
             ...prev,
             setupFlags: { ...prev.setupFlags, llmProvidersConfigured: isValid }
         }));
     }
-  }, [config.llmConfig.providers, updateConfig, config.setupFlags.llmProvidersConfigured]);
+  }, [safeProvidersConfig, updateConfig, config.setupFlags.llmProvidersConfigured, onValidityChange]);
 
   const handleAddProviderInput = (providerId: LlmProviderId) => {
     setActiveInputProviderIds(prev => new Set(prev).add(providerId));
@@ -75,9 +96,10 @@ const StepLlmProviders: React.FC = () => {
       <div className="space-y-6">
         {providerOrder.map(providerId => {
           const providerDetails = LLM_PROVIDERS_DETAILS[providerId];
-          const providerConfig = config.llmConfig.providers[providerId];
+          const providerConfig = safeProvidersConfig[providerId]; // Use safeProvidersConfig
           const isInputActive = activeInputProviderIds.has(providerId);
-          const showInput = isInputActive || providerConfig.apiKeyInfo.key || providerConfig.isConfigured || ['error', 'invalid'].includes(providerConfig.apiKeyInfo.status);
+          // Ensure providerConfig is not undefined before accessing its properties
+          const showInput = providerConfig && (isInputActive || providerConfig.apiKeyInfo.key || providerConfig.isConfigured || ['error', 'invalid'].includes(providerConfig.apiKeyInfo.status));
 
           return (
             <div key={providerId} className="p-1 rounded-lg_ bg-white_">
@@ -102,9 +124,9 @@ const StepLlmProviders: React.FC = () => {
                     </div>
                 </div>
 
-              ) : (
+              ) : providerConfig ? ( // Ensure providerConfig exists before rendering ApiKeyInput
                 <ApiKeyInput providerId={providerId} />
-              )}
+              ) : null}
             </div>
           );
         })}
