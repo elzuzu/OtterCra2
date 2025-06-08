@@ -1,0 +1,6 @@
+{
+  "name": "OtterCra Setup Wizard",
+  "description": "An application to guide users through the initial setup process of OtterCra, focusing on LLM API configuration and connectivity testing. It allows users to configure API keys for various LLM providers and validates them.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

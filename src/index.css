@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply bg-slate-100 text-slate-800; /* Added base text color */
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-slate-200; /* Use Tailwind color */
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-500; /* Use Tailwind color */
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-600; /* Use Tailwind color */
+}
+
+/* Step Wizard Styles */
+.step-active {
+  background-color: #3b82f6; /* bg-blue-500 */
+  color: white;
+}
+.step-completed {
+  background-color: #10b981; /* bg-green-500 */
+  color: white;
+}
+.step-inactive {
+  background-color: #e5e7eb; /* bg-gray-200 */
+  color: #4b5563; /* text-gray-700 */
+}
