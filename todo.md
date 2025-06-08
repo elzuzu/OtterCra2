@@ -17,7 +17,7 @@ L'état actuel de ottercra2 constitue une base solide.
 - [x] Monitoring de Santé Post-Setup :
   - [x] Dashboard simple affichant le statut des services configurés.
 
-## 📦 Phase 1 : Packaging & Accès Natif (Terminé)
+## ✅ Phase 1 : Packaging & Accès Natif (Terminé)
 Objectif : Transformer l'application React en une application de bureau pour accéder aux fichiers locaux et aux applications de l'utilisateur.
 - [x] Mettre en place un framework d'application de bureau
   - Détails Techniques : Choisir et configurer Tauri ou Electron. Tauri est recommandé pour sa légèreté et sa sécurité.
@@ -27,7 +27,7 @@ Objectif : Transformer l'application React en une application de bureau pour acc
     - [x] Mettre en place le script de build pour générer un exécutable .exe et un installeur .msi pour Windows.
     - Modèle : ottercra/Compile-OtterCra.ps1 pour l'inspiration sur le processus de build.
 
-## 🔌 Phase 2 : Développement des Connecteurs de Données
+## 🔄 Phase 2 : Développement des Connecteurs de Données (En cours)
 Objectif : Implémenter la logique pour collecter les données brutes depuis les sources de l'utilisateur.
 - [ ] Connecteur Natif Outlook
   - Description : Lire les emails et événements du calendrier via l'interface COM de Windows.
@@ -59,7 +59,7 @@ Objectif : Implémenter la logique pour collecter les données brutes depuis les
     - [ ] Lire des fichiers Excel simples contenant des listes d'activités.
   - Modèle : ottercra/cra_assistant/cra_reader.py.
 
-## 🤖 Phase 3 : Développement du Moteur d'Analyse et de Génération
+## 📝 Phase 3 : Développement du Moteur d'Analyse et de Génération (À venir)
 Objectif : Mettre en place le cœur logique de l'application qui transforme les données brutes en saisies CRA.
 - [ ] Moteur d'Analyse par LLM
   - Description : Envoyer les données collectées aux API LLM pour obtenir une première estimation des heures par tâche.
@@ -89,7 +89,7 @@ Objectif : Mettre en place le cœur logique de l'application qui transforme les 
     - L'opération doit être atomique pour éviter de laisser le fichier dans un état corrompu.
   - Modèle : ottercra/cra_assistant/cra_injector.py.
 
-## 🖥️ Phase 4 : Interface Utilisateur de Génération
+## 🖥️ Phase 4 : Interface Utilisateur de Génération (À venir)
 Objectif : Créer l'interface permettant à l'utilisateur de piloter le processus de génération.
 - [ ] Créer un Wizard de Génération de CRA
   - Description : Un nouveau composant multi-étapes, distinct du wizard de setup.
@@ -105,7 +105,7 @@ Objectif : Créer l'interface permettant à l'utilisateur de piloter le processu
     - Modèle pour cette étape : ottercra/front/src/components/ValidationStep.jsx.
     - [ ] Injection : Un bouton "Injecter dans le CRA" qui exécute l'injecteur (Phase 3) et affiche un message de succès.
 
-## ⚙️ Phase 5 : CLI et Fonctionnalités Avancées
+## ⚙️ Phase 5 : CLI et Fonctionnalités Avancées (À venir)
 Objectif : Offrir une alternative en ligne de commande et améliorer la robustesse.
 - [ ] Interface en Ligne de Commande (CLI)
   - Description : Permettre l'automatisation et l'utilisation par des profils techniques.
