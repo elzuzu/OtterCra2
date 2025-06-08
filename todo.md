@@ -29,28 +29,31 @@ Objectif : Transformer l'application React en une application de bureau pour acc
 
 ## 🔄 Phase 2 : Développement des Connecteurs de Données (En cours)
 Objectif : Implémenter la logique pour collecter les données brutes depuis les sources de l'utilisateur.
+- [x] Structure de Base des Connecteurs
+  - [x] Définition des interfaces TypeScript pour les données
+  - [x] Création des classes de base pour les connecteurs
+  - [x] Mise en place du système de gestion d'erreurs et de métadonnées
 - [ ] Connecteur Natif Outlook
   - Description : Lire les emails et événements du calendrier via l'interface COM de Windows.
   - Détails Techniques :
-    - Utiliser un module backend (Rust/Node.js) qui s'interface avec les API win32com.
-    - Le frontend enverra une requête IPC pour une période donnée (startDate, endDate).
-    - Le backend retournera une liste d'objets Email et Event structurés.
+    - [x] Structure frontend avec Tauri IPC
+    - [ ] Implémentation backend Rust avec win32com
+    - [ ] Tests d'intégration
   - Modèle : ottercra/cra_assistant/email_analyzer.py et calendar_analyzer.py.
 - [ ] Connecteur pour le Système RH (SIRH)
   - Description : Extraire les heures travaillées, congés et absences depuis le portail RH.
   - Détails Techniques :
-    - URL Cible : https://sirh4you.prod.etat-ge.ch/app/foryou
-    - Outil : Utiliser Playwright ou Selenium. Le backend lancera une instance de navigateur en mode headless pour se connecter et scraper les données.
-  - Étapes :
-    - [ ] Navigation vers la page de connexion.
-    - [ ] Attente de l'authentification (peut nécessiter une gestion de SSO/MFA).
-    - [ ] Navigation vers la page de résumé journalier (/demarches/mydaysummary/).
-    - [ ] Boucle sur chaque jour de la période pour extraire les "H effectuées /J", les "Vacances", et autres absences.
+    - [x] Structure frontend avec Tauri IPC
+    - [ ] Implémentation backend avec Playwright/Selenium
+    - [ ] Gestion de l'authentification SSO/MFA
+    - [ ] Tests d'intégration
   - Modèle : ottercra/cra_assistant/hr_connector.py.
 - [ ] Lecteur de Fichiers Excel
   - Description : Lire et interpréter les fichiers Excel, notamment le CRA principal pour en extraire sa structure.
   - Détails Techniques :
-    - Bibliothèque : Utiliser SheetJS ou exceljs dans le backend Node.js/Tauri.
+    - [x] Structure frontend avec Tauri IPC
+    - [ ] Implémentation backend avec SheetJS/exceljs
+    - [ ] Tests d'intégration
   - Fonction 1: readTaskHierarchy (Lecteur de Structure CRA) :
     - [ ] Ouvrir le fichier ..._CRA.xlsx.
     - [ ] Parcourir la colonne des tâches (généralement la colonne A).
