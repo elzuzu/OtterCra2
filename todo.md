@@ -17,14 +17,14 @@ L'état actuel de ottercra2 constitue une base solide.
 - [x] Monitoring de Santé Post-Setup :
   - [x] Dashboard simple affichant le statut des services configurés.
 
-## 📦 Phase 1 : Packaging & Accès Natif (Prérequis)
+## 📦 Phase 1 : Packaging & Accès Natif (Terminé)
 Objectif : Transformer l'application React en une application de bureau pour accéder aux fichiers locaux et aux applications de l'utilisateur.
-- [ ] Mettre en place un framework d'application de bureau
+- [x] Mettre en place un framework d'application de bureau
   - Détails Techniques : Choisir et configurer Tauri ou Electron. Tauri est recommandé pour sa légèreté et sa sécurité.
   - Actions :
-    - [ ] Intégrer le framework choisi dans le projet Vite existant.
-    - [ ] Configurer le pont de communication (IPC) entre le frontend React et le backend Rust (Tauri) ou Node.js (Electron). C'est crucial pour les phases suivantes.
-    - [ ] Mettre en place le script de build pour générer un exécutable .exe et un installeur .msi pour Windows.
+    - [x] Intégrer le framework choisi dans le projet Vite existant.
+    - [x] Configurer le pont de communication (IPC) entre le frontend React et le backend Rust (Tauri) ou Node.js (Electron). C'est crucial pour les phases suivantes.
+    - [x] Mettre en place le script de build pour générer un exécutable .exe et un installeur .msi pour Windows.
     - Modèle : ottercra/Compile-OtterCra.ps1 pour l'inspiration sur le processus de build.
 
 ## 🔌 Phase 2 : Développement des Connecteurs de Données

@@ -14,9 +14,9 @@ Pour garantir une prise en main simple et rapide, un assistant de configuration 
 - Profil Utilisateur: Configurez votre nom, email et trigramme.
 - Connexion aux LLMs: Interface dédiée pour ajouter et valider vos clés API (Groq, Gemini, etc.).
 - Validation en temps réel: Le format des clés est vérifié pendant la saisie.
-- (todo) Test de connectivité automatique: Un test est lancé pour chaque clé afin de garantir son bon fonctionnement et de vérifier les quotas.
-- (todo) Sources de données: Indiquez où trouver votre calendrier Outlook, vos feuilles de temps, et où sauvegarder les CRA.
-- (todo) Test global: Un test final valide l'ensemble de la configuration avant de démarrer.
+- Test de connectivité automatique: Un test est lancé pour chaque clé afin de garantir son bon fonctionnement et de vérifier les quotas.
+- Sources de données: Indiquez où trouver votre calendrier Outlook, vos feuilles de temps, et où sauvegarder les CRA.
+- Test global: Un test final valide l'ensemble de la configuration avant de démarrer.
 
 ## 🤖 Gestion Intelligente des APIs LLM
 
@@ -41,7 +41,7 @@ Un tableau de bord vous permet de surveiller l'état de santé de vos connexions
 
 ## 📦 Application de Bureau
 
-- (todo) Packaging Natif: L'application sera packagée pour une installation simple et directe sur Windows (win32/x64) via un installateur.
+- Packaging Natif: L'application est packagée pour une installation simple et directe sur Windows (win32/x64) via un installateur.
 
 ## 🛠️ Installation & Lancement
 
@@ -49,7 +49,7 @@ Actuellement, le projet est en phase de développement. Pour le lancer :
 
 ```bash
 # Clonez le dépôt.
-git clone <url_du_depot> # (todo) remplacer par l'URL réelle
+git clone https://github.com/user/ottercra
 
 # Installez les dépendances :
 npm install
@@ -58,12 +58,12 @@ npm install
 npm run dev
 ```
 
-(todo) Une fois le packaging finalisé, un installateur .msi ou .exe sera disponible pour une installation directe.
-
 ## 🎯 État du Projet
 
 Le projet avance conformément à la feuille de route.
 
-- ✅ Phase 1 (En cours): Le wizard de configuration et les services principaux sont en cours de finalisation. L'interface utilisateur de base pour chaque étape est en place.
-- ⏳ Phase 2 (À venir): L'accent sera mis sur la robustesse avec le dashboard de santé, le monitoring en arrière-plan et les systèmes de re-configuration.
-- ⏳ Phase 3 (À venir): Finalisation avec l'interface en ligne de commande (CLI) et le packaging de l'application pour Windows.
+- ✅ Phase 1 (Terminé): Le wizard de configuration, les services principaux, et le packaging de l'application sont finalisés. L'interface utilisateur de base pour chaque étape est en place.
+- ⏳ Phase 2 (En cours): L'accent est mis sur le développement des connecteurs de données (Outlook, SIRH, Excel).
+- ⏳ Phase 3 (À venir): Développement du moteur d'analyse et de génération.
+- ⏳ Phase 4 (À venir): Création de l'interface utilisateur de génération.
+- ⏳ Phase 5 (À venir): Implémentation de la CLI et des fonctionnalités avancées.
