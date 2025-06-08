@@ -17,6 +17,7 @@ interface SetupWizardProps {
 
 const SetupWizard: React.FC<SetupWizardProps> = ({ onSetupComplete }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [isLlmStepValid, setIsLlmStepValid] = useState(false); // State for LLM step validity
   const context = useContext(ConfigContext);
 
   if (!context) {
@@ -61,6 +62,10 @@ const SetupWizard: React.FC<SetupWizardProps> = ({ onSetupComplete }) => {
     }
   };
   
+  const handleLlmValidityChange = (isValid: boolean) => {
+    setIsLlmStepValid(isValid);
+  };
+
   const handleSkip = () => {
     if (currentStepInfo.skippable) {
         if (currentStepId === WizardStepId.DataSources) {
@@ -78,8 +83,7 @@ const SetupWizard: React.FC<SetupWizardProps> = ({ onSetupComplete }) => {
       return !config.userProfile.username || !config.userProfile.email || !config.userProfile.trigram;
     }
     if (currentStepId === WizardStepId.LlmProviders) {
-      const configuredProviders = Object.values(config.llmConfig.providers).filter(p => p.isConfigured && p.apiKeyInfo.status === 'valid');
-      return configuredProviders.length === 0; // Must configure at least one LLM
+      return !isLlmStepValid; // Use local state updated by child component
     }
     if (currentStepId === WizardStepId.TestConnectivity) {
         return !config.setupFlags.connectivityValidated; // Must have LLM connectivity validated
@@ -101,7 +105,7 @@ const SetupWizard: React.FC<SetupWizardProps> = ({ onSetupComplete }) => {
       case WizardStepId.UserProfile:
         return <StepUserProfile />;
       case WizardStepId.LlmProviders:
-        return <StepLlmProviders />;
+        return <StepLlmProviders onValidityChange={handleLlmValidityChange} />;
       case WizardStepId.DataSources:
         return <StepDataSources />;
       case WizardStepId.TestConnectivity:
